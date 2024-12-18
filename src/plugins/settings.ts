@@ -23,6 +23,16 @@ export default class AppSettings {
   }
 
   specification: Record<keyof PluginSettings, SettingItem> = {
+    listHeader: {
+      public: true,
+      section: SETTINGS_SECTION_NAME,
+      storage: SettingStorage.File,
+      label: localization.setting__listHeader,
+      description: localization.setting__listHeader__description,
+      type: SettingItemType.String,
+      value: 'Backlinks',
+    },
+
     listPosition: {
       public: true,
       section: SETTINGS_SECTION_NAME,
@@ -37,16 +47,6 @@ export default class AppSettings {
         [BacklinksListPosition.Header]: 'Note Header',
         [BacklinksListPosition.None]: 'None',
       },
-    },
-
-    listHeader: {
-      public: true,
-      section: SETTINGS_SECTION_NAME,
-      storage: SettingStorage.File,
-      label: localization.setting__listHeader,
-      description: localization.setting__listHeader__description,
-      type: SettingItemType.String,
-      value: 'Backlinks',
     },
 
     listType: {

@@ -1,14 +1,14 @@
 import joplin from 'api';
 import MarkdownIt from 'markdown-it';
-import {
-  BacklinksListType,
-  OPEN_NOTE_CMD,
-  GET_BACKLINKS_CMD,
-  BacklinksListParent,
-  BacklinksListPosition,
-} from '../constants';
 import { BacklinksContent, JoplinNote } from '../types';
 import localization from '../localization';
+import {
+  BacklinksListType,
+  BacklinksListParent,
+  BacklinksListPosition,
+  OPEN_NOTE_CMD,
+  GET_BACKLINKS_CMD,
+} from '../constants';
 import findNoteBacklinks from '../utils/findNoteBacklinks';
 import fetchNoteParentTitles from '../utils/fetchNoteParentTitles';
 import escapeMarkdown from '../utils/escapeMarkdown';

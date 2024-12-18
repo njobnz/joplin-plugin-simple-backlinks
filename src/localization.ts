@@ -2,10 +2,10 @@ interface AppLocalization {
   settings__appName: string;
   settings__description: string;
 
-  setting__listPosition: string;
-  setting__listPosition__description: string;
   setting__listHeader: string;
   setting__listHeader__description: string;
+  setting__listPosition: string;
+  setting__listPosition__description: string;
   setting__listType: string;
   setting__listType__description: string;
   setting__showParents: string;
@@ -31,10 +31,10 @@ const defaultStrings: AppLocalization = {
   settings__appName: 'Simple Backlinks',
   settings__description: '',
 
-  setting__listPosition: 'Backlinks location',
-  setting__listPosition__description: 'Location to display the automatic backlinks block.',
   setting__listHeader: 'Backlinks header',
   setting__listHeader__description: 'Text to display as the header of the backlinks block.',
+  setting__listPosition: 'Backlinks location',
+  setting__listPosition__description: 'Location to display the automatic backlinks block.',
   setting__listType: 'List style',
   setting__listType__description: 'Display list using line breaks or as an ordered or unordered list.',
   setting__showParents: 'Show notebooks',
