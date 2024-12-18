@@ -95,7 +95,7 @@ export default class App {
       case OPEN_NOTE_CMD:
         try {
           if (!message?.noteId) throw Error('Note ID is missing.');
-          await joplin.commands.execute('openNote', message.noteId);
+          return await joplin.commands.execute('openNote', message.noteId);
         } catch (exception) {
           console.error('Cannot open note:', exception, message);
           return { error: 'Cannot open note:', exception, message };
