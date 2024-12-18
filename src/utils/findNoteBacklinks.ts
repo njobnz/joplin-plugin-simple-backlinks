@@ -3,7 +3,7 @@ import fetchNotes from './fetchNotes';
 
 /**
  * Finds all notes that backlink to the given note and excludes ignored notes.
- * 
+ *
  * @param {JoplinNote} note - The note to search for backlinks.
  * @param {string[]} ignoreList - A list of note IDs to ignore.
  * @param {string} ignoreText - Notes with this text will be ignored.
