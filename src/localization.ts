@@ -25,17 +25,21 @@ interface AppLocalization {
   setting__ignoreList: string;
   setting__ignoreList__description: string;
 
+  command_importBacklinksIgnoreList: string;
   command_insertBacklinksHeader: string;
   command_insertBacklinksList: string;
   command_toggleNoteBacklinksIgnoreList: string;
   command_openBacklinksIgnoreList: string;
-  command_toggleBacklinksPanel: string;
   command_pruneBacklinksIgnoreList: string;
+  command_toggleBacklinksPanel: string;
 
   message__noteIgnoreListAdded: string;
   message__noteIgnoreListRemoved: string;
   message__ignoreListNotesPruned: string;
   message__ignoreListNoNotesPruned: string;
+  message__importIgnoreListSuccess: string;
+  message__importIgnoreListFailure: string;
+  message__importIgnoreListNotFound: string;
   message__pruneIgnoreList: string;
   message__noBacklinksHint: string;
   message__reloadPanel: string;
@@ -75,17 +79,21 @@ const defaultStrings: AppLocalization = {
   setting__ignoreList: 'Ignore list',
   setting__ignoreList__description: 'List of notes to ignore from backlinks.',
 
+  command_importBacklinksIgnoreList: 'Import existing backlinks ignore list into Simple Backlinks',
   command_insertBacklinksHeader: 'Insert backlinks header',
   command_insertBacklinksList: 'Insert backlinks list',
   command_toggleNoteBacklinksIgnoreList: 'Add or remove note from ignore list',
   command_openBacklinksIgnoreList: 'Open backlinks ignore list',
-  command_toggleBacklinksPanel: 'Show/hide backlinks panel',
   command_pruneBacklinksIgnoreList: 'Prune backlinks ignore list',
+  command_toggleBacklinksPanel: 'Show/hide backlinks panel',
 
   message__noteIgnoreListAdded: 'Note added to backlinks ignore list',
   message__noteIgnoreListRemoved: 'Note removed from backlinks ignore list',
   message__ignoreListNotesPruned: 'note(s) pruned from ignore list',
   message__ignoreListNoNotesPruned: 'No deleted notes to prune from ignore list',
+  message__importIgnoreListSuccess: 'Successfully imported existing backlinks ignore list into Simple Backlinks',
+  message__importIgnoreListFailure: 'Failed to import existing backlinks ignore list into Simple Backlinks',
+  message__importIgnoreListNotFound: 'An existing backlinks ignore list was not found',
   message__pruneIgnoreList: 'Prune permanently deleted notes from ignore list?',
   message__noBacklinksHint: '*No backlinks found.*',
   message__reloadPanel: '# Simple Backlinks\n\nSelect a note to load this panel.',

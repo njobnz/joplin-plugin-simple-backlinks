@@ -136,6 +136,30 @@ export default class App {
     };
   };
 
+  registerImportBacklinksIgnoreListCmd = async () => {
+    await joplin.commands.register({
+      name: 'importBacklinksIgnoreList',
+      label: localization.command_importBacklinksIgnoreList,
+      iconName: 'fas fa-hand-point-left',
+      execute: async () => {
+        try {
+          const settingKey = 'plugin-joplin.plugin.ambrt.backlinksToNote.myBacklinksCustomSettingIgnoreList';
+          const importList = await joplin.settings.globalValue(settingKey);
+          const ignoreList = await this.setting('ignoreList');
+          await joplin.settings.setValue('ignoreList', [...new Set([...ignoreList, ...importList])]);
+          alert(localization.message__importIgnoreListSuccess);
+        } catch (e) {
+          const message = e instanceof Error ? e.message : String(e);
+          if (message.startsWith('Unknown key')) {
+            alert(localization.message__importIgnoreListNotFound);
+          } else {
+            alert(`${localization.message__importIgnoreListFailure}:\n\n${message}`);
+          }
+        }
+      },
+    });
+  };
+
   registerInsertBacklinksHeadCmd = async () => {
     await joplin.commands.register({
       name: 'insertBacklinksHeader',
@@ -337,12 +361,13 @@ export default class App {
     this.setting = this.settings.get;
 
     this.createBacklinksDialogs();
+    this.registerImportBacklinksIgnoreListCmd();
     this.registerInsertBacklinksHeadCmd();
     this.registerInsertBacklinksListCmd();
+    this.registerToggleBacklinksPanelCmd();
     this.registerOpenIgnoreListCmd();
     this.registerPruneIgnoreListCmd();
     this.registerToggleIgnoreListCmd();
-    this.registerToggleBacklinksPanelCmd();
     this.createBacklinksMenus();
   };
 }
