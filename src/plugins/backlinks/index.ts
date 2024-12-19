@@ -1,6 +1,6 @@
 import joplin from 'api';
 import { ViewHandle } from 'api/types';
-import { BACKLINKS_PANEL_ID } from '../../constants';
+import { BACKLINKS_PANEL_EL, BACKLINKS_PANEL_ID } from '../../constants';
 import localization from '../../localization';
 import App from '..';
 
@@ -32,9 +32,15 @@ export default class BacklinksView {
       else await joplin.views.panels.show(this.panel);
 
       if (this.panel) {
+        const themeId = await joplin.settings.globalValue('theme');
+        const theme = [1, 3].includes(themeId) ? 'light' : 'dark';
+
         const backlinks = await this.app.getBacklinksList(true, true);
         backlinks.head = backlinks.head.replace(/<\/?h[1-6]\b/g, match => (match[1] === '/' ? '</h1' : '<h1'));
-        await joplin.views.panels.setHtml(this.panel, backlinks.head + backlinks.body);
+
+        const html = `<div id="${BACKLINKS_PANEL_EL}" class="${theme}">${backlinks.head}${backlinks.body}</div>`;
+
+        await joplin.views.panels.setHtml(this.panel, html);
       } else console.error('Failed to initialize backlinks panel.');
     } else if (this.panel) await joplin.views.panels.hide(this.panel);
   };
