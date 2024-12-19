@@ -242,7 +242,7 @@ export default class App {
         ]);
 
         const response = await joplin.views.dialogs.open(this.dialogs.ignoreList);
-        if (response.id == 'open') {
+        if (response.id == 'ok') {
           try {
             await joplin.commands.execute('openNote', response.formData.notes.noteId);
           } catch (e) {
