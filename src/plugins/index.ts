@@ -209,21 +209,19 @@ export default class App {
         const list = await this.setting('ignoreList');
 
         for (const id of list) {
-          const note = await joplin.data.get(['notes', id], {
-            fields: ['id', 'title'],
-          });
-          options.push(`<option value="${note.id}">${note.title}</option>`);
+          const note = await fetchNoteById(id, ['title']);
+          if (note) options.push(`<option value="${id}">${note.title.trim() !== '' ? note.title : id}</option>`);
+          else options.push(`<option value="${id}">NOTE DELETED (${id})</option>`);
         }
 
-        const html =
-          options.length > 0
-            ? options.join('\n')
-            : `<option selected="selected">${localization.dialog_ignoreList_empty}</option>`;
+        if (!options.length)
+          options.push(`<option selected="selected">${localization.dialog_ignoreList_empty}</option>`);
 
+        const html = options.join('\n');
         const body = `
           <h3>${localization.dialog_ignoreList_title}</h3>
           <form name="notes">
-            <select style="width: 100%" name="noteId" size="6">
+            <select style="width: 100%" name="noteId" size="12">
               ${html}
             </select>
           </form>
