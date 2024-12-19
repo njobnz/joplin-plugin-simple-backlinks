@@ -30,9 +30,13 @@ interface AppLocalization {
   command_toggleNoteBacklinksIgnoreList: string;
   command_openBacklinksIgnoreList: string;
   command_toggleBacklinksPanel: string;
+  command_pruneBacklinksIgnoreList: string;
 
   message__noteIgnoreListAdded: string;
   message__noteIgnoreListRemoved: string;
+  message__ignoreListNotesPruned: string;
+  message__ignoreListNoNotesPruned: string;
+  message__pruneIgnoreList: string;
   message__noBacklinksHint: string;
   message__reloadPanel: string;
 
@@ -76,9 +80,13 @@ const defaultStrings: AppLocalization = {
   command_toggleNoteBacklinksIgnoreList: 'Add or remove note from ignore list',
   command_openBacklinksIgnoreList: 'Open backlinks ignore list',
   command_toggleBacklinksPanel: 'Show/hide backlinks panel',
+  command_pruneBacklinksIgnoreList: 'Prune backlinks ignore list',
 
   message__noteIgnoreListAdded: 'Note added to backlinks ignore list',
   message__noteIgnoreListRemoved: 'Note removed from backlinks ignore list',
+  message__ignoreListNotesPruned: 'note(s) pruned from ignore list',
+  message__ignoreListNoNotesPruned: 'No deleted notes to prune from ignore list',
+  message__pruneIgnoreList: 'Prune permanently deleted notes from ignore list?',
   message__noBacklinksHint: '*No backlinks found.*',
   message__reloadPanel: '# Simple Backlinks\n\nSelect a note to load this panel.',
 

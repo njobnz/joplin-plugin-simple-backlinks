@@ -1,5 +1,5 @@
 import joplin from 'api';
-import MarkdownIt from 'markdown-it';
+import { MenuItemLocation, ToolbarButtonLocation } from 'api/types';
 import { BacklinksContent, JoplinNote } from '../types';
 import localization from '../localization';
 import {
@@ -9,13 +9,14 @@ import {
   OPEN_NOTE_CMD,
   GET_BACKLINKS_CMD,
 } from '../constants';
-import findNoteBacklinks from '../utils/findNoteBacklinks';
+import fetchNoteById from '../utils/fetchNoteById';
 import fetchNoteParentTitles from '../utils/fetchNoteParentTitles';
+import findNoteBacklinks from '../utils/findNoteBacklinks';
 import escapeMarkdown from '../utils/escapeMarkdown';
 import AppSettings from './settings';
 import MarkdownView from './markdownIt';
 import BacklinksView from './backlinks';
-import { MenuItemLocation, ToolbarButtonLocation } from 'api/types';
+import MarkdownIt from 'markdown-it';
 
 export default class App {
   markdown: any;
@@ -109,6 +110,24 @@ export default class App {
     );
 
     return result.join('\n');
+  };
+
+  pruneBacklinksIgnoreList = async (): Promise<number> => {
+    let result = 0;
+
+    const list = await this.setting('ignoreList');
+    for (let i = list.length - 1; i >= 0; i--) {
+      const id = list[i];
+      const note = await fetchNoteById(id);
+      if (!note) {
+        let index = list.indexOf(id);
+        if (index > -1) list.splice(index, 1);
+        result++;
+      }
+    }
+    await joplin.settings.setValue('ignoreList', list);
+
+    return result;
   };
 
   createBacklinksDialogs = async () => {
@@ -254,13 +273,33 @@ export default class App {
     });
   };
 
+  registerPruneIgnoreListCmd = async () => {
+    await joplin.commands.register({
+      name: 'pruneBacklinksIgnoreList',
+      label: localization.command_pruneBacklinksIgnoreList,
+      iconName: 'fas fa-hand-point-left',
+      execute: async () => {
+        const confirm = await joplin.views.dialogs.showMessageBox(localization.message__pruneIgnoreList);
+        if (confirm !== 0) return;
+
+        const result = await this.pruneBacklinksIgnoreList();
+        const message =
+          result > 0
+            ? `${result} ${localization.message__ignoreListNotesPruned}`
+            : localization.message__ignoreListNoNotesPruned;
+
+        alert(message);
+      },
+    });
+  };
+
   registerToggleBacklinksPanelCmd = async () => {
     await joplin.commands.register({
       name: 'toggleBacklinksPanel',
       label: localization.command_toggleBacklinksPanel,
       iconName: 'fas fa-hand-point-left',
       execute: async () => {
-        if (!this.panel) throw new Error('no referrer panel');
+        if (!this.panel) return;
         await joplin.settings.setValue('showPanel', !(await this.setting('showPanel')));
         this.panel.refresh();
       },
@@ -276,12 +315,16 @@ export default class App {
   createBacklinksMenus = async () => {
     await joplin.views.menus.create('simpleBacklinksMenu', 'Simple backlinks', [
       {
+        commandName: 'toggleNoteBacklinksIgnoreList',
+        accelerator: 'Ctrl+Alt+I',
+      },
+      {
         commandName: 'openBacklinksIgnoreList',
         accelerator: 'Ctrl+Alt+L',
       },
       {
-        commandName: 'toggleNoteBacklinksIgnoreList',
-        accelerator: 'Ctrl+Alt+I',
+        commandName: 'pruneBacklinksIgnoreList',
+        accelerator: 'Ctrl+Alt+P',
       },
     ]);
   };
@@ -297,6 +340,7 @@ export default class App {
     this.registerInsertBacklinksHeadCmd();
     this.registerInsertBacklinksListCmd();
     this.registerOpenIgnoreListCmd();
+    this.registerPruneIgnoreListCmd();
     this.registerToggleIgnoreListCmd();
     this.registerToggleBacklinksPanelCmd();
     this.createBacklinksMenus();
