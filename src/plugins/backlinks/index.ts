@@ -34,8 +34,12 @@ export default class BacklinksView {
       if (this.panel) {
         const backlinks = await this.app.getBacklinksList(true, true);
         backlinks.head = backlinks.head.replace(/<\/?h[1-6]\b/g, match => (match[1] === '/' ? '</h1' : '<h1'));
-        const html = `<div id="${BACKLINKS_PANEL_EL}">${backlinks.head}${backlinks.body}</div>`;
-        await joplin.views.panels.setHtml(this.panel, html);
+
+        const text = `${backlinks.head}${backlinks.body}`;
+        const html = text !== '' ? text : this.app.markdown.render(localization.message__reloadPanel);
+        const body = `<div id="${BACKLINKS_PANEL_EL}">${html}</div>`;
+
+        await joplin.views.panels.setHtml(this.panel, body);
       } else console.error('Failed to initialize backlinks panel.');
     } else if (this.panel) await joplin.views.panels.hide(this.panel);
   };

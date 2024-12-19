@@ -80,7 +80,7 @@ const defaultStrings: AppLocalization = {
   message__noteIgnoreListAdded: 'Note added to backlinks ignore list',
   message__noteIgnoreListRemoved: 'Note removed from backlinks ignore list',
   message__noBacklinksHint: '*No backlinks found.*',
-  message__reloadPanel: '# Simple Backlinks\n\nChange notes to reload this panel.',
+  message__reloadPanel: '# Simple Backlinks\n\nSelect a note to load this panel.',
 
   dialog_ignoreList_title: 'Backlinks Ignore List',
   dialog_ignoreList_empty: 'List is empty',

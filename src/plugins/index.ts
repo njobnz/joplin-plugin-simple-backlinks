@@ -64,9 +64,9 @@ export default class App {
     if (!isFound && result.position === BacklinksListPosition.None) return result;
 
     const note = (await joplin.workspace.selectedNote()) as JoplinNote;
-    if (!isPanel && note.body.includes(await this.setting('manualText'))) return result;
+    if (!note || (!isPanel && note.body.includes(await this.setting('manualText')))) return result;
 
-    const notes = await findNoteBacklinks(note, await this.setting('ignoreList'), await this.setting('ignoreText'));
+    const notes = await findNoteBacklinks(note.id, await this.setting('ignoreList'), await this.setting('ignoreText'));
 
     result.hide = notes.length === 0 && (await this.setting('hideEmpty'));
     result.head = this.markdown.render(await this.generateBacklinksHead(note, await this.setting('listHeader')));
@@ -142,8 +142,13 @@ export default class App {
       iconName: 'fas fa-hand-point-left',
       execute: async () => {
         const note = (await joplin.workspace.selectedNote()) as JoplinNote;
-        const notes = await findNoteBacklinks(note, await this.setting('ignoreList'), await this.setting('ignoreTag'));
+        if (!note) return;
 
+        const notes = await findNoteBacklinks(
+          note.id,
+          await this.setting('ignoreList'),
+          await this.setting('ignoreTag')
+        );
         if (!notes) return;
 
         const text = await this.setting('manualText');
@@ -243,9 +248,7 @@ export default class App {
         if (response.id == 'ok') {
           try {
             await joplin.commands.execute('openNote', response.formData.notes.noteId);
-          } catch (e) {
-            console.error('Error opening note:', e);
-          }
+          } catch (e) {}
         }
       },
     });
