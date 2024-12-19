@@ -259,7 +259,7 @@ export default class App {
       },
       {
         commandName: 'toggleNoteBacklinksIgnoreList',
-        accelerator: 'Ctrl+Alt+T',
+        accelerator: 'Ctrl+Alt+I',
       },
     ]);
   };
