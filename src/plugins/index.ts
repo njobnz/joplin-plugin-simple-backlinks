@@ -157,7 +157,7 @@ export default class App {
         const body =
           (await this.setting('listPosition')) === BacklinksListPosition.Header
             ? `${html}\n\n${note.body}`
-            : `${note.body}\n\n${html}\n`;
+            : `${note.body}\n${html}\n`;
 
         await joplin.commands.execute('textSelectAll');
         await joplin.commands.execute('replaceSelection', body);
