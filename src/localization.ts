@@ -29,6 +29,7 @@ interface AppLocalization {
   command_insertBacklinksList: string;
   command_toggleNoteBacklinksIgnoreList: string;
   command_openBacklinksIgnoreList: string;
+  command_toggleBacklinksPanel: string;
 
   message__noteIgnoreListAdded: string;
   message__noteIgnoreListRemoved: string;
@@ -74,6 +75,7 @@ const defaultStrings: AppLocalization = {
   command_insertBacklinksList: 'Insert backlinks list',
   command_toggleNoteBacklinksIgnoreList: 'Add or remove note from ignore list',
   command_openBacklinksIgnoreList: 'Open backlinks ignore list',
+  command_toggleBacklinksPanel: 'Show/hide backlinks panel',
 
   message__noteIgnoreListAdded: 'Note added to backlinks ignore list',
   message__noteIgnoreListRemoved: 'Note removed from backlinks ignore list',

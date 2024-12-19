@@ -253,6 +253,25 @@ export default class App {
     });
   };
 
+  registerToggleBacklinksPanelCmd = async () => {
+    await joplin.commands.register({
+      name: 'toggleBacklinksPanel',
+      label: localization.command_toggleBacklinksPanel,
+      iconName: 'fas fa-hand-point-left',
+      execute: async () => {
+        if (!this.panel) throw new Error('no referrer panel');
+        await joplin.settings.setValue('showPanel', !(await this.setting('showPanel')));
+        this.panel.refresh();
+      },
+    });
+
+    await joplin.views.toolbarButtons.create(
+      'toggleBacklinksPanelToolbar',
+      'toggleBacklinksPanel',
+      ToolbarButtonLocation.NoteToolbar
+    );
+  };
+
   createBacklinksMenus = async () => {
     await joplin.views.menus.create('simpleBacklinksMenu', 'Simple backlinks', [
       {
@@ -276,8 +295,9 @@ export default class App {
     this.createBacklinksDialogs();
     this.registerInsertBacklinksHeadCmd();
     this.registerInsertBacklinksListCmd();
-    this.registerToggleIgnoreListCmd();
     this.registerOpenIgnoreListCmd();
+    this.registerToggleIgnoreListCmd();
+    this.registerToggleBacklinksPanelCmd();
     this.createBacklinksMenus();
   };
 }
