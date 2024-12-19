@@ -21,7 +21,7 @@ export default (context: any) => ({
           const header = findHeaderByName(heading, element);
           const message = {
             command: '${GET_BACKLINKS_CMD}',
-            isManual: header ? true : false
+            isFound: header ? true : false
           };
 
           webviewApi.postMessage('${contentScriptId}', message).then(result => {

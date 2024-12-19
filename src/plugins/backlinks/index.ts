@@ -32,19 +32,16 @@ export default class BacklinksView {
       else await joplin.views.panels.show(this.panel);
 
       if (this.panel) {
-        const backlinks = await this.app.getBacklinksList(true);
+        const backlinks = await this.app.getBacklinksList(true, true);
         backlinks.head = backlinks.head.replace(/<\/?h[1-6]\b/g, match => (match[1] === '/' ? '</h1' : '<h1'));
         await joplin.views.panels.setHtml(this.panel, backlinks.head + backlinks.body);
       } else console.error('Failed to initialize backlinks panel.');
     } else if (this.panel) await joplin.views.panels.hide(this.panel);
   };
 
-  done = false;
   init = async (): Promise<void> => {
-    if (this.done) return;
     this.setting = this.app.settings.get;
     await joplin.settings.onChange(this.refresh);
     await joplin.workspace.onNoteSelectionChange(this.refresh);
-    this.done = true;
   };
 }

@@ -121,6 +121,17 @@ export default class AppSettings {
       value: true,
     },
 
+    manualText: {
+      public: true,
+      section: SETTINGS_SECTION_NAME,
+      storage: SettingStorage.File,
+      label: localization.setting__manualText,
+      description: localization.setting__manualText__description,
+      type: SettingItemType.String,
+      value: '<!-- backlinks-manual -->',
+      advanced: true,
+    },
+
     ignoreText: {
       public: true,
       section: SETTINGS_SECTION_NAME,
@@ -171,9 +182,7 @@ export default class AppSettings {
     localStorage.setItem(LOCAL_STORE_SETTINGS_KEY, JSON.stringify(settings));
   };
 
-  done = false;
   init = async () => {
-    if (this.done) return;
     await joplin.settings.registerSection(SETTINGS_SECTION_NAME, {
       label: localization.settings__appName,
       description: localization.settings__description,
@@ -182,6 +191,5 @@ export default class AppSettings {
     await joplin.settings.registerSettings(this.specification);
     await joplin.settings.onChange(this.save);
     await this.save();
-    this.done = true;
   };
 }

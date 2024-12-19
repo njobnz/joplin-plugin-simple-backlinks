@@ -18,13 +18,29 @@ interface AppLocalization {
   setting__showPanel__description: string;
   setting__showIcon: string;
   setting__showIcon__description: string;
+  setting__manualText: string;
+  setting__manualText__description: string;
   setting__ignoreText: string;
   setting__ignoreText__description: string;
   setting__ignoreList: string;
   setting__ignoreList__description: string;
 
+  command_insertBacklinksHeader: string;
+  command_insertBacklinksList: string;
+  command_toggleNoteBacklinksIgnoreList: string;
+  command_openBacklinksIgnoreList: string;
+
+  message__noteIgnoreListAdded: string;
+  message__noteIgnoreListRemoved: string;
   message__noBacklinksHint: string;
   message__reloadPanel: string;
+
+  dialog_ignoreList_title: string;
+  dialog_ignoreList_empty: string;
+  dialog_ignoreList_open: string;
+  dialog_ignoreList_close: string;
+
+  menu_simpleBacklinks: string;
 }
 
 const defaultStrings: AppLocalization = {
@@ -47,13 +63,29 @@ const defaultStrings: AppLocalization = {
   setting__showPanel__description: 'Display backlinks in a seperate panel.',
   setting__showIcon: 'Joplin icon',
   setting__showIcon__description: 'Display the internal Joplin link icon on backlinks.',
+  setting__manualText: 'Manual text',
+  setting__manualText__description: 'Text to add to notes to disable automatic backlinks.',
   setting__ignoreText: 'Ignore text',
-  setting__ignoreText__description: 'Text to add to notes to ignore it from backlinks.',
+  setting__ignoreText__description: 'Text to add to notes to ignore them from backlinks.',
   setting__ignoreList: 'Ignore list',
   setting__ignoreList__description: 'List of notes to ignore from backlinks.',
 
+  command_insertBacklinksHeader: 'Insert backlinks header',
+  command_insertBacklinksList: 'Insert backlinks list',
+  command_toggleNoteBacklinksIgnoreList: 'Add or remove note from ignore list',
+  command_openBacklinksIgnoreList: 'Open backlinks ignore list',
+
+  message__noteIgnoreListAdded: 'Note added to backlinks ignore list',
+  message__noteIgnoreListRemoved: 'Note removed from backlinks ignore list',
   message__noBacklinksHint: '\n\n*No backlinks found.*',
   message__reloadPanel: '# Simple Backlinks\n\nChange notes to reload this panel.',
+
+  dialog_ignoreList_title: 'Backlinks Ignore List',
+  dialog_ignoreList_empty: 'List is empty',
+  dialog_ignoreList_open: 'Open',
+  dialog_ignoreList_close: 'Close',
+
+  menu_simpleBacklinks: 'Simple backlinks',
 };
 
 const localizations: Record<string, AppLocalization> = {

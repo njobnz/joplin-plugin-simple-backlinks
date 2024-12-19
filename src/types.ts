@@ -9,6 +9,7 @@ export interface PluginSettings {
   showHint: boolean;
   showPanel: boolean;
   showIcon: boolean;
+  manualText: string;
   ignoreText: string;
   ignoreList: string[];
 }

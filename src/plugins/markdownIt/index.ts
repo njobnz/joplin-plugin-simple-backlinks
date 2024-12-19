@@ -11,15 +11,12 @@ export default class MarkdownView {
     this.app = app;
   }
 
-  done = false;
   init = async (): Promise<void> => {
-    if (this.done) return;
     await joplin.contentScripts.register(
       ContentScriptType.MarkdownItPlugin,
       MARKDOWNIT_SCRIPT_ID,
       './plugins/markdownIt/plugin.js'
     );
     await joplin.contentScripts.onMessage(MARKDOWNIT_SCRIPT_ID, this.app.onMessageHandler);
-    this.done = true;
   };
 }
