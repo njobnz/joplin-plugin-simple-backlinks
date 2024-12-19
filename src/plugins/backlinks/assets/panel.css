@@ -56,7 +56,7 @@ body,
     margin: 0;
 }
 
-#joplin-plugin-content > h1:first-child {
+#simple-backlinks-panel > h1:first-child {
     margin-top: 0;
     padding-top: 0;
 }
