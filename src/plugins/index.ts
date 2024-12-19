@@ -126,7 +126,6 @@ export default class App {
         const note = (await joplin.workspace.selectedNote()) as JoplinNote;
         if (!note) return;
 
-        // TODO: Insert at cursor
         const head = await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const body = `${note.body}\n${head}`;
 
@@ -147,7 +146,6 @@ export default class App {
 
         if (!notes) return;
 
-        // TODO: Insert at cursor
         const text = await this.setting('manualText');
         const head = await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
@@ -155,7 +153,11 @@ export default class App {
           await this.setting('listType'),
           await this.setting('showHint')
         );
-        const body = `${note.body}\n\n${text}\n${head}\n\n${list}\n`;
+        const html = `${text}\n${head}\n\n${list}`;
+        const body =
+          (await this.setting('listPosition')) === BacklinksListPosition.Header
+            ? `${html}\n\n${note.body}`
+            : `${note.body}\n\n${html}\n`;
 
         await joplin.commands.execute('textSelectAll');
         await joplin.commands.execute('replaceSelection', body);
