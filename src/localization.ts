@@ -63,7 +63,7 @@ const defaultStrings: AppLocalization = {
   settings__description: '',
 
   setting__listHeader: 'Backlinks header',
-  setting__listHeader__description: 'Header text for the backlinks block.',
+  setting__listHeader__description: 'Header text for the backlinks block. (Default: Backlinks)',
   setting__listPosition: 'Backlinks location',
   setting__listPosition__description: 'Position of the backlinks block.',
   setting__listType: 'List style',
@@ -84,11 +84,11 @@ const defaultStrings: AppLocalization = {
   setting__manualHeader__description:
     'Custom HTML text for the manual backlinks header. The element must have an ID of "backlinks-header".',
   setting__listDelimiter: 'List delimiter',
-  setting__listDelimiter__description: 'Define a custom delimiter to seperate backlinks when the "New Line" list style is selected.',
+  setting__listDelimiter__description: 'Define a custom delimiter to seperate backlinks when the "New Line" list style is selected. (Default: \\n)',
   setting__disableText: 'Disable text',
-  setting__disableText__description: 'Text to disable automatic backlinks in notes.',
+  setting__disableText__description: 'Text to disable automatic backlinks in notes. (Default: <!-- backlinks-disable -->)',
   setting__ignoreText: 'Ignore text',
-  setting__ignoreText__description: 'Text to exclude notes from backlinks.',
+  setting__ignoreText__description: 'Text to exclude notes from backlinks. (Default: <!-- backlinks-ignore -->)',
   setting__ignoreList: 'Ignore list',
   setting__ignoreList__description: 'List of notes to exclude from backlinks.',
 
