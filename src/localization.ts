@@ -18,6 +18,8 @@ interface AppLocalization {
   setting__showPanel__description: string;
   setting__showIcon: string;
   setting__showIcon__description: string;
+  setting__customCss: string;
+  setting__customCss__description: string;
   setting__manualText: string;
   setting__manualText__description: string;
   setting__ignoreText: string;
@@ -72,6 +74,8 @@ const defaultStrings: AppLocalization = {
   setting__showPanel__description: 'Display backlinks in a separate panel.',
   setting__showIcon: 'Joplin icon',
   setting__showIcon__description: 'Display Joplin link icon next to backlinks.',
+  setting__customCss: 'Panel stylesheet',
+  setting__customCss__description: 'Path to custom CSS for styling the backlinks panel.',
   setting__manualText: 'Manual text',
   setting__manualText__description: 'Text to disable automatic backlinks in notes.',
   setting__ignoreText: 'Ignore text',
