@@ -17,7 +17,7 @@ export enum BacklinksListPosition {
 export enum BacklinksListType {
   Ordered,
   Unordered,
-  NewLine,
+  Delimited,
 }
 export enum BacklinksListParent {
   Full,

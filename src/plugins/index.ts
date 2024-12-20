@@ -15,6 +15,7 @@ import fetchNoteById from '../utils/fetchNoteById';
 import fetchNoteParentTitles from '../utils/fetchNoteParentTitles';
 import findNoteBacklinks from '../utils/findNoteBacklinks';
 import escapeMarkdown from '../utils/escapeMarkdown';
+import replaceEscape from '../utils/replaceEscape';
 import AppSettings from './settings';
 import Renderer from './renderer';
 import MarkdownView from './markdownIt';
@@ -98,7 +99,7 @@ export default class App {
 
   generateBacklinksList = async (
     notes: JoplinNote[],
-    type: BacklinksListType = BacklinksListType.NewLine,
+    type: BacklinksListType = BacklinksListType.Delimited,
     hint: boolean = false
   ): Promise<string> => {
     if (!notes.length && hint) return localization.message__noBacklinksHint;
@@ -120,7 +121,8 @@ export default class App {
       })
     );
 
-    return result.join('\n');
+    const delimiter = type == BacklinksListType.Delimited ? replaceEscape(await this.setting('listDelimiter')) : '\n';
+    return result.join(delimiter);
   };
 
   pruneBacklinksIgnoreList = async (): Promise<number> => {

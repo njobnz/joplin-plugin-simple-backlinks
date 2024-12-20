@@ -107,7 +107,7 @@ export default class AppSettings {
         options: {
           [BacklinksListType.Ordered]: 'Ordered List',
           [BacklinksListType.Unordered]: 'Unordered List',
-          [BacklinksListType.NewLine]: 'Line Breaks',
+          [BacklinksListType.Delimited]: 'New Lines',
         },
       },
 
@@ -186,6 +186,17 @@ export default class AppSettings {
         description: localization.setting__manualHeader__description,
         type: SettingItemType.String,
         value: '',
+        advanced: true,
+      },
+
+      listDelimiter: {
+        public: true,
+        section: SETTINGS_SECTION_NAME,
+        storage: SettingStorage.File,
+        label: localization.setting__listDelimiter,
+        description: localization.setting__listDelimiter__description,
+        type: SettingItemType.String,
+        value: '\\n',
         advanced: true,
       },
 

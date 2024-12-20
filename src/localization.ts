@@ -22,6 +22,8 @@ interface AppLocalization {
   setting__customCss__description: string;
   setting__manualHeader: string;
   setting__manualHeader__description: string;
+  setting__listDelimiter: string;
+  setting__listDelimiter__description: string;
   setting__disableText: string;
   setting__disableText__description: string;
   setting__ignoreText: string;
@@ -65,7 +67,7 @@ const defaultStrings: AppLocalization = {
   setting__listPosition: 'Backlinks location',
   setting__listPosition__description: 'Position of the backlinks block.',
   setting__listType: 'List style',
-  setting__listType__description: 'Display backlinks as line breaks, ordered, or unordered list.',
+  setting__listType__description: 'Display backlinks as new lines, ordered, or unordered list.',
   setting__showParents: 'Show notebooks',
   setting__showParents__description: 'Include notebook paths in backlink titles.',
   setting__hideEmpty: 'Hide empty',
@@ -81,6 +83,8 @@ const defaultStrings: AppLocalization = {
   setting__manualHeader: 'Manual header',
   setting__manualHeader__description:
     'Custom HTML text for the manual backlinks header. The element must have an ID of "backlinks-header".',
+  setting__listDelimiter: 'List delimiter',
+  setting__listDelimiter__description: 'Define a custom delimiter to seperate backlinks when the "New Line" list style is selected.',
   setting__disableText: 'Disable text',
   setting__disableText__description: 'Text to disable automatic backlinks in notes.',
   setting__ignoreText: 'Ignore text',

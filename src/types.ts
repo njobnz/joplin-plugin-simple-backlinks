@@ -11,6 +11,7 @@ export interface PluginSettings {
   showIcon: boolean;
   customCss: string;
   manualHeader: string;
+  listDelimiter: string;
   disableText: string;
   ignoreText: string;
   ignoreList: string[];
