@@ -21,9 +21,9 @@ export default (context: any) => ({
             return null;
           };
 
-          const header = (await webviewApi.postMessage('${contentScriptId}', { 
-            command: '${GET_SETTING_CMD}', 
-            name: 'listHeader' 
+          const header = (await webviewApi.postMessage('${contentScriptId}', {
+            command: '${GET_SETTING_CMD}',
+            name: 'listHeader'
           })).replace(/^#{1,6}\\s+/gm, '');
 
           const content = document.getElementById('rendered-md');

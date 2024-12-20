@@ -180,8 +180,8 @@ export default class App {
         const note = (await joplin.workspace.selectedNote()) as JoplinNote;
         if (!note) return;
 
-        const manual = await this.setting('manualHeader');
-        const head = manual ? manual : await this.generateBacklinksHead(note, await this.setting('listHeader'));
+        const header = await this.setting('manualHeader');
+        const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const body =
           (await this.setting('listPosition')) === BacklinksListPosition.Header
             ? `${head}\n\n${note.body}`
@@ -209,9 +209,9 @@ export default class App {
         );
         if (!notes) return;
 
-        const manual = await this.setting('manualHeader');
+        const header = await this.setting('manualHeader');
         const text = await this.setting('manualText');
-        const head = manual ? manual : await this.generateBacklinksHead(note, await this.setting('listHeader'));
+        const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
           notes,
           await this.setting('listType'),
@@ -374,14 +374,14 @@ export default class App {
     await this.viewer.init();
     await this.panel.init();
 
-    this.createBacklinksDialogs();
-    this.registerImportBacklinksIgnoreListCmd();
-    this.registerInsertBacklinksHeadCmd();
-    this.registerInsertBacklinksListCmd();
-    this.registerToggleBacklinksPanelCmd();
-    this.registerOpenIgnoreListCmd();
-    this.registerPruneIgnoreListCmd();
-    this.registerToggleIgnoreListCmd();
-    this.createBacklinksMenus();
+    await this.createBacklinksDialogs();
+    await this.registerImportBacklinksIgnoreListCmd();
+    await this.registerInsertBacklinksHeadCmd();
+    await this.registerInsertBacklinksListCmd();
+    await this.registerToggleBacklinksPanelCmd();
+    await this.registerOpenIgnoreListCmd();
+    await this.registerPruneIgnoreListCmd();
+    await this.registerToggleIgnoreListCmd();
+    await this.createBacklinksMenus();
   };
 }

@@ -6,7 +6,7 @@ export default async (note: JoplinNote, depth: number = 1): Promise<string[]> =>
 
   let parentId = note?.parent_id;
   while (parentId && parentId !== '' && depth > -1) {
-    if (depth !== 0) depth = depth === 1 ? (depth = -1) : depth--;
+    if (depth !== 0) depth = depth === 1 ? -1 : depth - 1;
 
     try {
       const folder = await joplin.data.get(['folders', parentId], { fields: ['title', 'parent_id'] });
