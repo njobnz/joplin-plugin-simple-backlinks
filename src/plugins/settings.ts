@@ -189,14 +189,14 @@ export default class AppSettings {
         advanced: true,
       },
 
-      manualText: {
+      disableText: {
         public: true,
         section: SETTINGS_SECTION_NAME,
         storage: SettingStorage.File,
-        label: localization.setting__manualText,
-        description: localization.setting__manualText__description,
+        label: localization.setting__disableText,
+        description: localization.setting__disableText__description,
         type: SettingItemType.String,
-        value: '<!-- backlinks-manual -->',
+        value: '<!-- backlinks-disable -->',
         advanced: true,
       },
 

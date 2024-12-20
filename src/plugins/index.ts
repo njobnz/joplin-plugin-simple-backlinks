@@ -76,7 +76,7 @@ export default class App {
     if (!isFound && result.position === BacklinksListPosition.None) return result;
 
     const note = (await joplin.workspace.selectedNote()) as JoplinNote;
-    if (!note || (!isPanel && note.body.includes(await this.setting('manualText')))) return result;
+    if (!note || (!isPanel && note.body.includes(await this.setting('disableText')))) return result;
 
     const notes = await findNoteBacklinks(note.id, await this.setting('ignoreList'), await this.setting('ignoreText'));
 
@@ -210,7 +210,7 @@ export default class App {
         if (!notes) return;
 
         const header = await this.setting('manualHeader');
-        const text = await this.setting('manualText');
+        const text = await this.setting('disableText');
         const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
           notes,
