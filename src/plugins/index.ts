@@ -14,14 +14,13 @@ import fetchNoteParentTitles from '../utils/fetchNoteParentTitles';
 import findNoteBacklinks from '../utils/findNoteBacklinks';
 import escapeMarkdown from '../utils/escapeMarkdown';
 import AppSettings from './settings';
+import Renderer from './renderer';
 import MarkdownView from './markdownIt';
 import BacklinksView from './backlinks';
-import MarkdownIt from 'markdown-it';
 
 export default class App {
-  markdown: any;
   settings: AppSettings;
-  setting: Function;
+  renderer: Renderer;
   viewer: MarkdownView;
   panel: BacklinksView;
   dialogs: {
@@ -29,11 +28,17 @@ export default class App {
   };
 
   constructor() {
-    this.markdown = new MarkdownIt({ breaks: true });
     this.settings = new AppSettings(this);
+    this.renderer = new Renderer(this);
     this.viewer = new MarkdownView(this);
     this.panel = new BacklinksView(this);
   }
+
+  setting = async (name: string, value?: any): Promise<any> => {
+    if (!this.settings) throw Error('Settings not initialized.');
+    if (value !== undefined) return this.settings.set(name, value);
+    return this.settings.get(name);
+  };
 
   onMessageHandler = async (message: any): Promise<any> => {
     switch (message?.command) {
@@ -70,8 +75,8 @@ export default class App {
     const notes = await findNoteBacklinks(note.id, await this.setting('ignoreList'), await this.setting('ignoreText'));
 
     result.hide = notes.length === 0 && (await this.setting('hideEmpty'));
-    result.head = this.markdown.render(await this.generateBacklinksHead(note, await this.setting('listHeader')));
-    result.body = this.markdown.render(
+    result.head = this.renderer.render(await this.generateBacklinksHead(note, await this.setting('listHeader')));
+    result.body = this.renderer.render(
       await this.generateBacklinksList(notes, await this.setting('listType'), await this.setting('showHint'))
     );
 
@@ -125,7 +130,7 @@ export default class App {
         result++;
       }
     }
-    await joplin.settings.setValue('ignoreList', list);
+    await this.setting('ignoreList', list);
 
     return result;
   };
@@ -146,7 +151,7 @@ export default class App {
           const settingKey = 'plugin-joplin.plugin.ambrt.backlinksToNote.myBacklinksCustomSettingIgnoreList';
           const importList = await joplin.settings.globalValue(settingKey);
           const ignoreList = await this.setting('ignoreList');
-          await joplin.settings.setValue('ignoreList', [...new Set([...ignoreList, ...importList])]);
+          await this.setting('ignoreList', [...new Set([...ignoreList, ...importList])]);
           alert(localization.message__importIgnoreListSuccess);
         } catch (e) {
           const message = e instanceof Error ? e.message : String(e);
@@ -242,7 +247,7 @@ export default class App {
           alert(localization.message__noteIgnoreListAdded);
         }
 
-        await joplin.settings.setValue('ignoreList', list);
+        await this.setting('ignoreList', list);
       },
     });
   };
@@ -324,7 +329,7 @@ export default class App {
       iconName: 'fas fa-hand-point-left',
       execute: async () => {
         if (!this.panel) return;
-        await joplin.settings.setValue('showPanel', !(await this.setting('showPanel')));
+        await this.setting('showPanel', !(await this.setting('showPanel')));
         this.panel.refresh();
       },
     });
@@ -357,8 +362,6 @@ export default class App {
     await this.settings.init();
     await this.viewer.init();
     await this.panel.init();
-
-    this.setting = this.settings.get;
 
     this.createBacklinksDialogs();
     this.registerImportBacklinksIgnoreListCmd();

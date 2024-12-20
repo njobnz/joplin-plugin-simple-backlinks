@@ -17,7 +17,8 @@ export default class BacklinksView {
   build = async (): Promise<void> => {
     if (!this.app && this.panel) return;
     this.panel = await joplin.views.panels.create(BACKLINKS_PANEL_ID);
-    await joplin.views.panels.setHtml(this.panel, this.app.markdown.render(localization.message__reloadPanel));
+    const html = this.app.renderer.render(localization.message__reloadPanel);
+    await joplin.views.panels.setHtml(this.panel, `<div id="${BACKLINKS_PANEL_EL}">${html}</div>`);
     await joplin.views.panels.addScript(this.panel, './plugins/backlinks/assets/panel.css');
     await joplin.views.panels.addScript(this.panel, './plugins/backlinks/assets/panel.js');
     await joplin.views.panels.onMessage(this.panel, this.app.onMessageHandler);
@@ -36,7 +37,7 @@ export default class BacklinksView {
         backlinks.head = backlinks.head.replace(/<\/?h[1-6]\b/g, match => (match[1] === '/' ? '</h1' : '<h1'));
 
         const text = `${backlinks.head}${backlinks.body}`;
-        const html = text !== '' ? text : this.app.markdown.render(localization.message__reloadPanel);
+        const html = text !== '' ? text : this.app.renderer.render(localization.message__reloadPanel);
         const body = `<div id="${BACKLINKS_PANEL_EL}">${html}</div>`;
 
         await joplin.views.panels.setHtml(this.panel, body);

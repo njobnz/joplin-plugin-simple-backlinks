@@ -9,6 +9,7 @@ import {
   LOCAL_STORE_SETTINGS_KEY,
   SETTINGS_SECTION_NAME,
 } from '../constants';
+import { readSettings } from '../utils/readSettings';
 import App from '.';
 
 /**
@@ -166,6 +167,20 @@ export default class AppSettings {
       return fallback;
     }
   };
+
+  /**
+   * Set a setting using Joplin API.
+   *
+   * @returns {Promise<any>} The setting value.
+   */
+  set = async (name: string, value: any): Promise<void> => await joplin.settings.setValue(name, value);
+
+  /**
+   * Read settings from localStorage.
+   *
+   * @returns {PluginSettings} Plugin settings object.
+   */
+  read = readSettings;
 
   /**
    * Fetches plugin settings from Joplin's API and saves them in localStorage.
