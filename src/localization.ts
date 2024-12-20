@@ -20,6 +20,8 @@ interface AppLocalization {
   setting__showIcon__description: string;
   setting__customCss: string;
   setting__customCss__description: string;
+  setting__manualHeader: string;
+  setting__manualHeader__description: string;
   setting__manualText: string;
   setting__manualText__description: string;
   setting__ignoreText: string;
@@ -76,6 +78,9 @@ const defaultStrings: AppLocalization = {
   setting__showIcon__description: 'Display Joplin link icon next to backlinks.',
   setting__customCss: 'Panel stylesheet',
   setting__customCss__description: 'Path to custom CSS for styling the backlinks panel.',
+  setting__manualHeader: 'Manual header',
+  setting__manualHeader__description:
+    'Custom HTML text for the manual backlinks header. The element must have an ID of "backlinks-header".',
   setting__manualText: 'Manual text',
   setting__manualText__description: 'Text to disable automatic backlinks in notes.',
   setting__ignoreText: 'Ignore text',

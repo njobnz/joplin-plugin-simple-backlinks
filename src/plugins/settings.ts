@@ -178,6 +178,17 @@ export default class AppSettings {
         advanced: true,
       },
 
+      manualHeader: {
+        public: true,
+        section: SETTINGS_SECTION_NAME,
+        storage: SettingStorage.File,
+        label: localization.setting__manualHeader,
+        description: localization.setting__manualHeader__description,
+        type: SettingItemType.String,
+        value: '',
+        advanced: true,
+      },
+
       manualText: {
         public: true,
         section: SETTINGS_SECTION_NAME,

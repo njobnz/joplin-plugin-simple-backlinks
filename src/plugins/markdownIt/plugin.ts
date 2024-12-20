@@ -1,5 +1,10 @@
-import { BACKLINKS_SCRIPT_EL, BACKLINKS_LIST_RULE, BacklinksListPosition, GET_BACKLINKS_CMD } from '../../constants';
-import { readSettings } from '../../utils/readSettings';
+import {
+  BacklinksListPosition,
+  BACKLINKS_LIST_RULE,
+  BACKLINKS_SCRIPT_EL,
+  GET_BACKLINKS_CMD,
+  GET_SETTING_CMD,
+} from '../../constants';
 
 export default (context: any) => ({
   plugin: (markdownIt: any, _options: any): any => {
@@ -7,7 +12,7 @@ export default (context: any) => ({
 
     markdownIt.renderer.rules[BACKLINKS_LIST_RULE] = (_tokens, _idx, _options) => {
       const script = `
-        const simpleBacklinksInit = () => {
+        const simpleBacklinks = async () => {
           const findHeaderByName = (name, el) => {
             if (el && name && name !== '')
               for (const child of el.children)
@@ -16,32 +21,36 @@ export default (context: any) => ({
             return null;
           };
 
-          const element = document.getElementById('rendered-md');
-          const heading = '${readSettings().listHeader.replace(/^#{1,6}\s+/gm, '')}';
-          const header = findHeaderByName(heading, element);
+          const header = (await webviewApi.postMessage('${contentScriptId}', { 
+            command: '${GET_SETTING_CMD}', 
+            name: 'listHeader' 
+          })).replace(/^#{1,6}\\s+/gm, '');
+
+          const content = document.getElementById('rendered-md');
+          const heading = document.getElementById('backlinks-header') ?? findHeaderByName(header, content);
           const message = {
             command: '${GET_BACKLINKS_CMD}',
-            isFound: header ? true : false
+            isFound: !!heading
           };
 
           webviewApi.postMessage('${contentScriptId}', message).then(result => {
-            if (!element || result?.hide) return;
+            if (!content || result?.hide) return;
 
             const head = result?.head ?? '';
             const body = result?.body ?? '';
 
-            if (header) {
-              header.insertAdjacentHTML('afterend', body);
+            if (heading) {
+              heading.insertAdjacentHTML('afterend', body);
             } else {
               const location = Number(result?.position ?? 0);
               if (location == ${BacklinksListPosition.None}) return;
               const position = location == ${BacklinksListPosition.Header} ? 'afterbegin' : 'beforeend';
-              element.insertAdjacentHTML(position, head + body);
+              content.insertAdjacentHTML(position, head + body);
             }
           });
         };
 
-        simpleBacklinksInit();
+        simpleBacklinks();
 
         return false;
       `;

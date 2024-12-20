@@ -180,8 +180,12 @@ export default class App {
         const note = (await joplin.workspace.selectedNote()) as JoplinNote;
         if (!note) return;
 
-        const head = await this.generateBacklinksHead(note, await this.setting('listHeader'));
-        const body = `${note.body}\n${head}`;
+        const manual = await this.setting('manualHeader');
+        const head = manual ? manual : await this.generateBacklinksHead(note, await this.setting('listHeader'));
+        const body =
+          (await this.setting('listPosition')) === BacklinksListPosition.Header
+            ? `${head}\n\n${note.body}`
+            : `${note.body}\n${head}\n`;
 
         await joplin.commands.execute('textSelectAll');
         await joplin.commands.execute('replaceSelection', body);
@@ -205,8 +209,9 @@ export default class App {
         );
         if (!notes) return;
 
+        const manual = await this.setting('manualHeader');
         const text = await this.setting('manualText');
-        const head = await this.generateBacklinksHead(note, await this.setting('listHeader'));
+        const head = manual ? manual : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
           notes,
           await this.setting('listType'),

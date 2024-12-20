@@ -10,6 +10,7 @@ export interface PluginSettings {
   showPanel: boolean;
   showIcon: boolean;
   customCss: string;
+  manualHeader: string;
   manualText: string;
   ignoreText: string;
   ignoreList: string[];
