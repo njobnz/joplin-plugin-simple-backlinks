@@ -8,6 +8,8 @@ import {
   BacklinksListPosition,
   OPEN_NOTE_CMD,
   GET_BACKLINKS_CMD,
+  GET_SETTING_CMD,
+  SET_SETTING_CMD,
 } from '../constants';
 import fetchNoteById from '../utils/fetchNoteById';
 import fetchNoteParentTitles from '../utils/fetchNoteParentTitles';
@@ -44,6 +46,10 @@ export default class App {
     switch (message?.command) {
       case GET_BACKLINKS_CMD:
         return await this.getBacklinksList(message?.isFound ? true : false);
+      case GET_SETTING_CMD:
+        return await this.setting(message?.name);
+      case SET_SETTING_CMD:
+        return await this.setting(message?.name, message?.value);
       case OPEN_NOTE_CMD:
         try {
           if (!message?.noteId) throw Error('Note ID is missing.');
