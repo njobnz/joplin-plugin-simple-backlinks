@@ -1,3 +1,9 @@
+/**
+ * Replaces escaped characters in a string with their actual characters.
+ * 
+ * @param {string} input - The string containing escaped characters
+ * @returns {string} The unescaped string
+ */
 export default (input: string): string => {
   return input
     .replace(/\\n/g, '\n')

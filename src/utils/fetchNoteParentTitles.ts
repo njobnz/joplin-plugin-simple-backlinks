@@ -1,6 +1,14 @@
 import joplin from 'api';
 import { JoplinNote } from '../types';
 
+/**
+ * Fetches the titles of parent folders for a given note up to a specified depth.
+ *
+ * @param {string} note - The note to fetch parent folder titles for
+ * @param {number} depth - Parent depth to fetch (default: 1)
+ *                1: immediate parent, >1: multiple levels, -1: all parents
+ * @returns {Promise<string[]>} Array of parent folder titles from root to immediate parent
+ */
 export default async (note: JoplinNote, depth: number = 1): Promise<string[]> => {
   const results: string[] = [];
 
