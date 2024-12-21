@@ -288,7 +288,7 @@ function resolveExtraScriptPath(name) {
 	const s = name.split('.');
 	s.pop();
 	const nameNoExt = s.join('.');
-	const isWebview = ['plugins/backlinks/assets/panel'].some(page => nameNoExt.endsWith(page));
+	const isWebview = ['plugins/backlinks/assets/panel', 'plugins/markdownIt/assets/index'].some(page => nameNoExt.endsWith(page));
 	const target = isWebview ? 'web' : 'node';
 	return {
 		target,
