@@ -182,7 +182,7 @@ export default class App {
         const note = (await joplin.workspace.selectedNote()) as JoplinNote;
         if (!note) return;
 
-        const header = await this.setting('manualHeader');
+        const header = replaceEscape(await this.setting('manualHeader'));
         const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const body =
           (await this.setting('listPosition')) === BacklinksListPosition.Header
@@ -211,7 +211,7 @@ export default class App {
         );
         if (!notes) return;
 
-        const header = await this.setting('manualHeader');
+        const header = replaceEscape(await this.setting('manualHeader'));
         const text = await this.setting('disableText');
         const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
