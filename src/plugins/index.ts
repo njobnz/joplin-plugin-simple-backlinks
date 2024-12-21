@@ -211,8 +211,9 @@ export default class App {
         );
         if (!notes) return;
 
+        const disable = await this.setting('disableText');
         const header = replaceEscape(await this.setting('manualHeader'));
-        const text = await this.setting('disableText');
+        const text = !note.body.includes(disable) ? disable : '';
         const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
           notes,
