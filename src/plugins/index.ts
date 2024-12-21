@@ -213,14 +213,14 @@ export default class App {
 
         const disable = await this.setting('disableText');
         const header = replaceEscape(await this.setting('manualHeader'));
-        const text = !note.body.includes(disable) ? disable : '';
+        const text = !note.body.includes(disable) ? `${disable}\n` : '';
         const head = header ? header : await this.generateBacklinksHead(note, await this.setting('listHeader'));
         const list = await this.generateBacklinksList(
           notes,
           await this.setting('listType'),
           await this.setting('showHint')
         );
-        const html = `${text}\n${head}\n\n${list}`;
+        const html = `${text}${head}\n\n${list}`;
         const body =
           (await this.setting('listPosition')) === BacklinksListPosition.Header
             ? `${html}\n\n${note.body}`
