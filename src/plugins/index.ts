@@ -80,17 +80,19 @@ export default class App {
     if (!note || (!isPanel && note.body.includes(await this.setting('disableText')))) return result;
 
     const notes = await findNoteBacklinks(note.id, await this.setting('ignoreList'), await this.setting('ignoreText'));
-
     result.hide = notes.length === 0 && (await this.setting('hideEmpty'));
-    result.head = this.renderer.render(await this.generateBacklinksHead(note, await this.setting('listHeader')));
-    result.body = this.renderer.render(
-      await this.generateBacklinksList(notes, await this.setting('listType'), await this.setting('showHint'))
-    );
+
+    if (isPanel || !result.hide) {
+      result.head = this.renderer.render(this.generateBacklinksHead(note, await this.setting('listHeader')));
+      result.body = this.renderer.render(
+        await this.generateBacklinksList(notes, await this.setting('listType'), await this.setting('showHint'))
+      );
+    }
 
     return result;
   };
 
-  generateBacklinksHead = async (note: JoplinNote, header: string): Promise<string> => {
+  generateBacklinksHead = (note: JoplinNote, header: string): string => {
     if (!header || /^#{1,6}(?=\s)/.test(header)) return header;
     const headers = note.body.match(/^#{1,6}(?=\s)/gm) || [];
     const largest = headers.length ? '#'.repeat(Math.min(...headers.map(h => h.length))) : '#';
